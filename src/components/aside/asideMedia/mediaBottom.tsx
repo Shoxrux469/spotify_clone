@@ -2,20 +2,23 @@ import { useEffect, useRef, useState } from "react";
 import "../index.scss";
 import useService from "../../../hooks/service";
 
+interface IPlaylist {
+  name: string;
+}
+
 const MediaBottom = () => {
   const { getPlayLists, token } = useService();
   const [isHiddenSearch, setIsHiddenSearch] = useState<boolean>(true);
-  const [playLists, setPlayLists] = useState<object | null>(null);
+  const [playLists, setPlayLists] = useState<IPlaylist[] | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    getPlayLists("me/tracks?", 10).then((res) => {
-      setPlayLists(res);
-      console.log(res);
+    getPlayLists("me/playlists?", 50).then((res) => {
+      setPlayLists(res.items);
     });
   }, [token]);
 
-  console.log(playLists);
+  // console.log(playLists);
 
   const handleInputClick = () => {
     setIsHiddenSearch(false);
@@ -88,7 +91,21 @@ const MediaBottom = () => {
             </button>
           </span>
         </div>
-        <div className="flex flex-col items-center"></div>
+        <div className="flex flex-col items-center">
+          {playLists &&
+            playLists.map((item, i) => (
+              <div key={i} className="bg-white/30 p-2">
+                <div className="">
+                  <div className="bg-white/50 w-10 h-10"></div>
+                  <div>
+                    <div>
+                      <p>{item.name}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
