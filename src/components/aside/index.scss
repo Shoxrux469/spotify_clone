@@ -1,0 +1,27 @@
+.icon_default {
+  @apply w-6 h-6 fill-white/70;
+}
+.icon_active {
+  @apply w-6 h-6 fill-white;
+}
+
+.media_btns_style {
+  @apply p-2 rounded-full hover:bg-white/10 duration-200;
+  svg {
+    @apply w-4 h-4 fill-white/70 cursor-pointer;
+  }
+  &:hover {
+    svg {
+      @apply fill-white duration-200;
+    }
+  }
+}
+.media_search {
+  @apply rounded-md text-sm bg-white/10 text-white/70 h-8 duration-300 border-0;
+}
+.media_categories_span {
+  @apply px-3 text-sm py-[6px] text-white/90 font-semibold min-h-8 hover:bg-white/15 hover:text-white duration-200 ease-in-out rounded-full bg-white/10;
+}
+.recents_btn {
+  @apply flex items-center hover:scale-105 hover:text-white hover:fill-white fill-white/70 text-white/70 pr-3 pl-4 gap-2 py-1;
+}

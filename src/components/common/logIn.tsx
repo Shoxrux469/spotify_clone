@@ -5,7 +5,10 @@ const LogIn: React.FC = () => {
   const RESPONSE_TYPE = "token";
 
   return (
-    <div className="bg-black flex justify-center w-full h-full fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-10">
+    <div
+      id="login"
+      className="bg-black flex justify-center w-full h-full fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-10"
+    >
       <div className="w-full max-w-[500px] flex flex-col items-center bg-[#ffffff] py-[18px] px-6 rounded-lg fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-20">
         <div className="flex items-center justify-center gap-2 mb-4 pb-4 text-3xl text-black w-full border-b-2">
           <h2>Spotify</h2>

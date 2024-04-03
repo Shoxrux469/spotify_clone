@@ -1,38 +1,27 @@
 import { useCallback, useState } from "react";
-import axios, { Method } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const useHttp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const request = useCallback(
-    async (
-      url: string,
-      method: Method = "GET",
-      headers: object = {},
-      body: any = null
-    ) => {
+    async (url: string, headers: object = {}): Promise<AxiosResponse<any>> => {
       setLoading(true);
       try {
-        const response = await axios({
-          method,
-          url,
-          headers,
-          data: body,
-        });
-
+        const response = await axios.get(url, headers);
         setLoading(false);
-        return response.data;
-      } catch (e: unknown) {
+        console.log(response);
+        return response;
+      } catch (e) {
         if (e instanceof Error) {
           setLoading(false);
           setError(e.message);
           throw e;
         } else {
           console.log(`Some another error with ${e}`);
-
-          // Handle other types of errors if needed
         }
+        throw e;
       }
     },
     []

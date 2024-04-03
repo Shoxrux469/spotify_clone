@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react";
 import useHttp from "./https";
-// import { execFileSync } from "child_process";
+
+interface ISettings {
+  headers: object;
+}
 
 const useService = () => {
-  const [token, setToken] = useState<string | null>("");
   const { loading, error, request } = useHttp();
+  const [token, setToken] = useState<string | null>("");
 
   const _apiBase = "https://api.spotify.com/v1/";
+  const settings: ISettings = {
+    headers: { Authorization: "Bearer " + token },
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setToken(token);
+    setToken(localStorage.getItem("token"));
   }, []);
 
-  const getPlatLists = async (path: string) => {
+  const getPlayLists = async (path: string, limit: number) => {
     if (token) {
-      const res = await request(`${_apiBase}${path}`, "GET", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await request(
+        `${_apiBase}${path}limit=${limit}&offset=0`,
+        settings
+      );
       return res.data;
     }
   };
 
   return {
-    getPlatLists,
+    getPlayLists,
+    token,
   };
 };
 
