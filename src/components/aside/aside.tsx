@@ -3,10 +3,10 @@ import AsideMenu from "./Menu";
 
 const Aside = () => {
   return (
-    <div className="flex flex-col gap-2">
+    <aside className="flex w-[320px] flex-col h-full min-h-0 gap-2">
       <AsideMenu />
       <AsideMedia />
-    </div>
+    </aside>
   );
 };
 export default Aside;

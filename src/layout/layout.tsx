@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import LogIn from "../components/common/logIn";
 import Aside from "../components/aside/aside";
 import "../index.scss";
+import Player from "../components/common/player";
 interface LayoutProps {
   children: ReactNode;
 }
@@ -18,13 +19,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 
   return (
-    <div className="">
-      <div className="bg-black p-2 h-screen relative">
-        <aside className="w-[420px] min-h-0 h-full gap-2">
-          <Aside />
-          <main>{children}</main>
-        </aside>
-      </div>
+    <div className="min-h-screen h-full bg-black p-2 relative">
+      <main className="h-full">
+        <Aside />
+        {children}
+      </main>
+      <Player />
     </div>
   );
 };

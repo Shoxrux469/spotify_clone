@@ -29,8 +29,19 @@ body {
   }
 }
 
+.controls_btn {
+  @apply w-8 h-8 flex justify-center items-center;
+}
+
 .main {
   @apply h-full relative;
+}
+
+.player_btn {
+  @apply w-4 h-4 fill-white/70 hover:fill-white;
+  &_active {
+    @apply fill-[#1db954] w-4 h-4;
+  }
 }
 
 :root {

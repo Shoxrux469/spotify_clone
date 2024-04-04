@@ -11,7 +11,6 @@ const useHttp = () => {
       try {
         const response = await axios.get(url, headers);
         setLoading(false);
-        console.log(response);
         return response;
       } catch (e) {
         if (e instanceof Error) {
