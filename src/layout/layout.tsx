@@ -19,8 +19,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 
   return (
-    <div className="min-h-screen h-full bg-black p-2 relative">
-      <main className="h-full">
+    <div className="max-h-screen bg-black p-2 relative">
+      <main className="h-full flex gap-2 relative">
         <Aside />
         {children}
       </main>

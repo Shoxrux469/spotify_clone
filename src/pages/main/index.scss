@@ -1,0 +1,33 @@
+.main {
+  @apply bg-white/5 relative w-full max-h-fit overflow-y-scroll rounded-lg;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #3f4442;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #111111;
+  }
+}
+
+.main_content {
+  padding: clamp(
+    16px,
+    16px +
+      (100vw - var(--left-sidebar-width, 0px) - var(--panel-width, 0px) - 600px) /
+      424 * 8,
+    24px
+  );
+  @apply flex flex-col gap-6;
+}
+.filters_div {
+  @apply flex relative cursor-pointer items-center hover:bg-white/20 ease-in-out duration-200 bg-white/10 w-1/4 rounded-md font-bold;
+  button {
+    @apply bg-[#1ed760] p-2 hover:scale-105 rounded-full absolute right-2;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+  }
+}

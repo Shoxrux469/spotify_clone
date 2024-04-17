@@ -27,9 +27,23 @@ const useService = () => {
       return res.data;
     }
   };
+  const getAlbums = async (id: string) => {
+    if (token) {
+      const res = await request(`${_apiBase}albums/${id}`, settings);
+      return res.data;
+    }
+  };
+  const getUser = async () => {
+    if (token) {
+      const res = await request(`${_apiBase}me`, settings);
+      return res.data;
+    }
+  };
 
   return {
     getPlayLists,
+    getAlbums,
+    getUser,
     token,
   };
 };

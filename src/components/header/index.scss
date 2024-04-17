@@ -1,0 +1,6 @@
+.header {
+  @apply h-full flex flex-col p-4 gap-4;
+}
+.arrows_btn {
+  @apply w-8 h-8 bg-black/60 rounded-full flex justify-center items-center;
+}

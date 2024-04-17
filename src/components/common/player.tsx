@@ -4,28 +4,33 @@ import { FaRandom, FaPlayCircle, FaPauseCircle } from "react-icons/fa";
 import "../../index.scss";
 import { useState } from "react";
 
-interface PlayerState {
-  [key: string]: boolean;
+interface IPlayerState {
+  isRandom: boolean;
+  isPlaying: boolean;
+  isOutlineQueueList: boolean;
+  isMicrophone: boolean;
+  isText: boolean;
+  isDevice: boolean;
 }
 
 interface IControlsArr {
   path: string;
   addPath?: string;
   state: boolean;
-  stateFn: string;
+  stateFn: keyof IPlayerState;
 }
 
 const Player = () => {
-  const [playerState, setPlayerState] = useState<PlayerState>({
+  const [playerState, setPlayerState] = useState<IPlayerState>({
     isRandom: false,
     isPlaying: false,
-    isRepeat: false,
-    isRepeatInf: false,
     isOutlineQueueList: false,
     isMicrophone: false,
     isText: false,
     isDevice: false,
   });
+  const [isRepeat, setIsRepeat] = useState<boolean>(false);
+  const [isRepeatInf, setIsRepeatInf] = useState<boolean>(false);
 
   // Функция toggleState предназначена для переключения состояния определенного ключа в объекте состояния компонента.
   // Она принимает аргумент key, который должен быть ключом объекта состояния PlayerState.
@@ -33,11 +38,22 @@ const Player = () => {
   // Функция обратного вызова prevState => ({ ...prevState, [key]: !prevState[key] }) принимает предыдущее состояние компонента prevState и возвращает новый объект состояния.
   // Оператор ...prevState используется для создания поверхностной копии предыдущего состояния, чтобы избежать мутации предыдущего состояния напрямую.
   // [key]: !prevState[key] обновляет значение для указанного ключа key. Значение инвертируется с помощью оператора !. Если предыдущее значение было true, то после инверсии оно становится false, и наоборот.
-  const toggleState = (key: keyof PlayerState) => {
+  const toggleState = (key: keyof IPlayerState) => {
     setPlayerState((prevState) => ({
       ...prevState,
       [key]: !prevState[key],
     }));
+  };
+
+  const toggleRepeat = () => {
+    setIsRepeat(!isRepeat);
+    if (isRepeat) {
+      setIsRepeatInf(!isRepeatInf);
+    }
+  };
+
+  const offsetInfRepeat = () => {
+    setIsRepeatInf(!isRepeatInf);
   };
 
   const controlsArr: IControlsArr[] = [
@@ -68,7 +84,7 @@ const Player = () => {
   ];
 
   return (
-    <div className="h-[72px] w-full player">
+    <div className="w-full player">
       <div className="w-full flex">
         <div className="w-[30%] flex">
           <img src="" alt="" />
@@ -116,9 +132,9 @@ const Player = () => {
                 </svg>
               </button>
               <button className="controls_btn">
-                {playerState.isRepeatInf ? (
+                {isRepeatInf ? (
                   <svg
-                    onClick={() => toggleState("isRepeatInf")}
+                    onClick={offsetInfRepeat}
                     className="w-4 fill-[#1db954] h-4"
                   >
                     <path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h.75v1.5h-.75A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5zM12.25 2.5h-.75V1h.75A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25z"></path>
@@ -126,10 +142,10 @@ const Player = () => {
                   </svg>
                 ) : (
                   <svg
-                    onClick={() => toggleState("isRepeat")}
+                    onClick={toggleRepeat}
                     className="w-4 h-4 hover:fill-white"
                     style={
-                      playerState.isRepeat
+                      isRepeat
                         ? { fill: "#1db954" }
                         : { fill: "rgba(255, 255, 255, 0.7)" }
                     }

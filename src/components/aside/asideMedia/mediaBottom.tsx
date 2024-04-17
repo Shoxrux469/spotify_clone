@@ -34,7 +34,7 @@ const MediaBottom = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="pb-2 px-2">
         <div className="flex justify-between items-center pt-[2px] pr-[2px] pl-2">
           <div className="relative">
