@@ -33,8 +33,56 @@ body {
   @apply w-8 h-8 flex justify-center items-center;
 }
 
+.player {
+  @apply w-full h-fit px-5 pt-1 pb-2 bg-black/70
+  flex justify-between items-center gap-10 text-white;
+  audio {
+    height: 30px;
+    &::-webkit-media-controls-enclosure {
+      border-radius: 5px;
+      background-color: transparent;
+    }
+    &::-webkit-media-controls-play-button {
+      display: none;
+    }
+
+    &::-webkit-media-controls-current-time-display,
+    &::-webkit-media-controls-time-remaining-display {
+      color: #a6a6a6;
+      text-shadow: none;
+    }
+    &::-webkit-media-controls-timeline {
+      border-radius: 30px;
+    }
+    &::-webkit-media-controls-mute-button {
+      display: none !important;
+    }
+    &::-webkit-media-controls-volume-slider {
+      display: none !important;
+    }
+    &::-webkit-media-controls-volume-control-container.closed {
+      display: none !important;
+    }
+    &::-webkit-media-controls-volume-control-container {
+      display: none !important;
+    }
+    &::-webkit-media-controls-panel {
+      background-color: transparent;
+    }
+    &::-webkit-media-controls-rewind-button {
+      background-color: #fff;
+      color: #fff;
+    }
+    &::-webkit-media-controls-timeline {
+      color: #fff;
+      background-color: #3f4442;
+      @apply py-0 ml-2 px-0;
+    }
+  }
+}
+
 .main {
-  @apply h-full relative;
+  @apply overflow-y-scroll h-full relative;
 }
 
 .player_btn {
@@ -45,11 +93,11 @@ body {
 }
 
 :root {
-  --content-spacing: clamp(
-    16px,
-    16px +
-      (100vw - var(--left-sidebar-width, 0px) - var(--panel-width, 0px) - 600px) /
-      424 * 8,
-    24px
-  );
+  // --content-spacing: clamp(
+  //   16px,
+  //   16px +
+  //     (100vw - var(--left-sidebar-width, 0px) - var(--panel-width, 0px) - 600px) /
+  //     424 * 8,
+  //   24px
+  // );
 }

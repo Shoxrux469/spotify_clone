@@ -57,7 +57,7 @@ const Header = () => {
             <div
               className={`flex items-center gap-1 bg-[#242424] px-3 py-[14px] rounded-full ${
                 isFocused
-                  ? "border border-2 border-white"
+                  ? "border border-white"
                   : "hover:border hover:border-white/10"
               }`}
             >
