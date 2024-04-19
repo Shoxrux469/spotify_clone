@@ -1,4 +1,4 @@
-import { useDebugValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useService from "../../hooks/service";
 import Header from "../../components/header/header";
 import PlaylistsTypes from "./playlistsTypes";
@@ -10,9 +10,9 @@ interface IMergedData {
   images: {
     url: string;
   }[];
-  description: string;
   id: string;
-  tracks?: {
+  description?: string;
+  tracks: {
     href: string;
   };
 }
@@ -39,10 +39,10 @@ const Main = () => {
 
     Promise.all([
       getPlayLists(
-        `browse/featured-playlists?country=UZ&timestamp=${timestamp}&`,
+        `browse/featured-playlists?country=US&timestamp=${timestamp}&`,
         5
       ),
-      getPlayLists("browse/new-releases?country=UZ&", 5),
+      getPlayLists("browse/new-releases?country=US&", 5),
       getUser(),
     ]).then(([featuredRes, newReleasesRes, user]) => {
       const featuredResult = featuredRes?.playlists?.items.filter(
@@ -57,33 +57,26 @@ const Main = () => {
   }, [token]);
 
   return (
-    <div className="main relative h-full">
-      <div className="relative">
-        <Header />
-        <div>
-          <div className="main_content">
-            <PlaylistsTypes />
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold cursor-pointer hover:underline">
-                Специально для тебя, {user?.display_name}
-              </h2>
-              <p className="text-[#b3b3b3] hover:underline cursor-pointer font-semibold text-sm">
-                Показать все
-              </p>
-            </div>
-          </div>
-          <div className="px-3 pb-6">
-            <div className="flex">
-              {playLists &&
-                playLists.map((item, i) => (
-                  <PlayListsCard item={item} key={i} />
-                ))}
-            </div>
-            <div className="flex">
-              {albums &&
-                albums.map((item, i) => <PlayListsCard item={item} key={i} />)}
-            </div>
-          </div>
+    <div>
+      <div className="main_content">
+        <PlaylistsTypes />
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold cursor-pointer hover:underline">
+            Специально для тебя, {user?.display_name}
+          </h2>
+          <p className="text-[#b3b3b3] hover:underline cursor-pointer font-semibold text-sm">
+            Показать все
+          </p>
+        </div>
+      </div>
+      <div className="px-3 pb-6">
+        <div className="flex">
+          {playLists &&
+            playLists.map((item, i) => <PlayListsCard item={item} key={i} />)}
+        </div>
+        <div className="flex">
+          {albums &&
+            albums.map((item, i) => <PlayListsCard item={item} key={i} />)}
         </div>
       </div>
     </div>

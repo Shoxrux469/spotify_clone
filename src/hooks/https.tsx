@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
 import axios, { AxiosResponse } from "axios";
+// import { useMutation } from "react-query";
 
-const useHttp = () => {
+const useHttps = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,9 +27,21 @@ const useHttp = () => {
     []
   );
 
+  //   const getData = useMutation(async (path) => {
+  //     const base_url = "http://localhost:3001";
+  //     try {
+  //         const res = await axios.get(base_url + path);
+  //         return res.data;
+  //     } catch (error) {
+  //         console.error("Error fetching data:", error);
+  //         throw error;
+  //     }
+  // });
+  // }
+
   const clearError = useCallback(() => setError(null), []);
 
   return { loading, error, request, clearError };
 };
 
-export default useHttp;
+export default useHttps;

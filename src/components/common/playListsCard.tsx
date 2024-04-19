@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 interface IMergedData {
   name: string;
@@ -12,24 +12,26 @@ interface IMergedData {
   };
 }
 
-const PlayListsCard: React.FC<{ item: IMergedData }> = ({ item }) => {
+const PlayListsCard: React.FC<{
+  item: IMergedData;
+}> = ({ item }) => {
   const { images, name, description, id, tracks } = item;
-  console.log(item);
   const navigate = useNavigate();
 
-  const goToPlaylist = (item: IMergedData) => {
-    navigate(`../playlist/${id}`, {
-      state: {
-        track: tracks?.href,
-        playlist: item,
-        name: name,
-        img: images[0].url,
-      },
-    });
+  const state = {
+    track: tracks?.href,
+    playlist: item,
+    name: name,
+    img: images[0].url,
   };
+
+  const goToPlaylist = () => {
+    navigate(`playlist/${id}`, { state });
+  };
+
   return (
     <div
-      onClick={() => goToPlaylist(item)}
+      onClick={goToPlaylist}
       className="p-3 bg-transparent ease-in duration-200 w-full min-w-12 min-h-12 items-center hover:bg-white/5 cursor-pointer rounded-lg"
     >
       <img
@@ -46,5 +48,4 @@ const PlayListsCard: React.FC<{ item: IMergedData }> = ({ item }) => {
     </div>
   );
 };
-
 export default PlayListsCard;

@@ -1,18 +1,44 @@
+import { useNavigate } from "react-router";
+import useService from "../../hooks/service";
+
 interface IPlaylist {
   name: string;
   owner: { display_name: string };
+  id: string;
+  images: {
+    url: string;
+  }[];
+  tracks?: {
+    href: string;
+  };
 }
 
 const MyPlayLists: React.FC<{ item: IPlaylist }> = ({ item }) => {
+  const { owner, name, id, tracks, images } = item;
+  const navigate = useNavigate();
+
+  const state = {
+    track: tracks?.href,
+    playlist: item,
+    name: name,
+    img: images[0].url,
+  };
+
+  const goToPlaylist = () => {
+    navigate(`playlist/${id}`, { state });
+  };
+
   return (
-    <div className="flex w-full">
-      <div className="bg-white/50 rounded-md min-w-12 min-h-12 mr-3"></div>
+    <div onClick={goToPlaylist} className="flex w-full">
+      <img
+        src={images[0].url}
+        alt=""
+        className="bg-white/50 rounded-md max-w-12 max-h-12 mr-3"
+      ></img>
       <div className="flex justify-between items-center pr-2 w-full">
         <div>
-          <p className="text-green-500 font-semibold">{item.name}</p>
-          <span className="text-sm text-white/70">
-            {item.owner.display_name}
-          </span>
+          <p className="text-green-500 font-semibold">{name}</p>
+          <span className="text-sm text-white/70">{owner.display_name}</span>
         </div>
         <span>
           <svg className="fill-green-500 w-4 h-4 hidden" viewBox="0 0 16 16">

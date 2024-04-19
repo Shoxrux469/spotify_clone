@@ -6,6 +6,13 @@ import MyPlayLists from "../../common/myPlayLists";
 interface IPlaylist {
   name: string;
   owner: { display_name: string };
+  id: string;
+  images: {
+    url: string;
+  }[];
+  tracks?: {
+    href: string;
+  };
 }
 
 const MediaBottom = () => {

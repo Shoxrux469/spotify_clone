@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import useHttp from "./https";
+import useHttps from "./https";
 
 interface ISettings {
   headers: object;
 }
 
 const useService = () => {
-  const { loading, error, request } = useHttp();
+  const { loading, error, request } = useHttps();
   const [token, setToken] = useState<string | null>("");
 
   const _apiBase = "https://api.spotify.com/v1/";
@@ -40,9 +40,25 @@ const useService = () => {
     }
   };
 
+  const getPlayList = async (id: string) => {
+    if (token) {
+      const res = await request(`${_apiBase}playlists/${id}`, settings);
+      return res.data;
+    }
+  };
+
+  const getAlbum = async (id: string) => {
+    if (token) {
+      const res = await request(`${_apiBase}albums/${id}`, settings);
+      return res.data;
+    }
+  };
+
   return {
     getPlayLists,
+    getPlayList,
     getAlbums,
+    getAlbum,
     getUser,
     token,
   };
