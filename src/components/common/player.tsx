@@ -4,15 +4,7 @@ import { FaRandom, FaPlayCircle, FaPauseCircle } from "react-icons/fa";
 import "../../index.scss";
 import { useContext, useState } from "react";
 import currentTrack from "../../modules/contexts/currTrack";
-import { ITrack } from "../../types/types";
-interface IPlayerState {
-  isRandom: boolean;
-  isPlaying: boolean;
-  isOutlineQueueList: boolean;
-  isMicrophone: boolean;
-  isText: boolean;
-  isDevice: boolean;
-}
+import { IPlayerState } from "../../types/types";
 
 interface IControlsArr {
   path: string;

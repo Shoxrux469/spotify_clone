@@ -1,15 +1,8 @@
 import { useContext, useEffect, useRef } from "react";
 import bgContext from "../../modules/contexts/setBg";
 import { getAverageRGB } from "../../hooks/getImgBg";
-import { ITrack } from "../../types/types";
+import { IPlaylist, ITrack } from "../../types/types";
 
-interface IPlaylist {
-  name: string;
-  type: string;
-  images: {
-    url: string;
-  }[];
-}
 
 interface IPalyList {
   track: ITrack;

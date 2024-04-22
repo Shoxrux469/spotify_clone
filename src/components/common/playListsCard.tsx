@@ -1,16 +1,5 @@
 import { useNavigate } from "react-router";
-
-interface IMergedData {
-  name: string;
-  images: {
-    url: string;
-  }[];
-  id: string;
-  description?: string;
-  tracks?: {
-    href: string;
-  };
-}
+import { IMergedData } from "../../types/types";
 
 const PlayListsCard: React.FC<{
   item: IMergedData;

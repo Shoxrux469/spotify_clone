@@ -29,13 +29,23 @@ export interface IMergedData {
 }
 
 export interface IPlaylist {
-    name: string;
-    owner: { display_name: string };
-    id: string;
-    images: {
-      url: string;
-    }[];
-    tracks?: {
-      href: string;
-    };
-  }
+  name: string;
+  type: string;
+  owner: { display_name: string };
+  id: string;
+  images: {
+    url: string;
+  }[];
+  tracks?: {
+    href: string;
+  };
+}
+
+export interface IPlayerState {
+  isRandom: boolean;
+  isPlaying: boolean;
+  isOutlineQueueList: boolean;
+  isMicrophone: boolean;
+  isText: boolean;
+  isDevice: boolean;
+}
