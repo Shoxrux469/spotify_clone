@@ -1,13 +1,7 @@
 import useService from "../../hooks/service";
 import { useEffect, useState } from "react";
 import "./index.scss";
-
-interface IMergedData {
-  name: string;
-  images: {
-    url: string;
-  }[];
-}
+import { IMergedData } from "../../types/types";
 
 const PlaylistsTypes = () => {
   const { getPlayLists, getAlbums, token } = useService();

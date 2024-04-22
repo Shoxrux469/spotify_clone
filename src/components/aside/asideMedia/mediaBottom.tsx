@@ -2,18 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "../index.scss";
 import useService from "../../../hooks/service";
 import MyPlayLists from "../../common/myPlayLists";
-
-interface IPlaylist {
-  name: string;
-  owner: { display_name: string };
-  id: string;
-  images: {
-    url: string;
-  }[];
-  tracks?: {
-    href: string;
-  };
-}
+import { IPlaylist } from "../../../types/types";
 
 const MediaBottom = () => {
   const { getPlayLists, token } = useService();

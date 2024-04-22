@@ -27,18 +27,6 @@ const useHttps = () => {
     []
   );
 
-  //   const getData = useMutation(async (path) => {
-  //     const base_url = "http://localhost:3001";
-  //     try {
-  //         const res = await axios.get(base_url + path);
-  //         return res.data;
-  //     } catch (error) {
-  //         console.error("Error fetching data:", error);
-  //         throw error;
-  //     }
-  // });
-  // }
-
   const clearError = useCallback(() => setError(null), []);
 
   return { loading, error, request, clearError };

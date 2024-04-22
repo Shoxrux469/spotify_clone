@@ -1,17 +1,6 @@
 import { useNavigate } from "react-router";
 import useService from "../../hooks/service";
-
-interface IPlaylist {
-  name: string;
-  owner: { display_name: string };
-  id: string;
-  images: {
-    url: string;
-  }[];
-  tracks?: {
-    href: string;
-  };
-}
+import { IPlaylist } from "../../types/types";
 
 const MyPlayLists: React.FC<{ item: IPlaylist }> = ({ item }) => {
   const { owner, name, id, tracks, images } = item;

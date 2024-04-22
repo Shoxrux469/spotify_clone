@@ -8,6 +8,7 @@ import { GoBell } from "react-icons/go";
 import useService from "../../hooks/service";
 import { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
+import { useLocation } from "react-router";
 
 interface IUser {
   images: [
@@ -23,13 +24,17 @@ interface ITypesBtns {
 
 const Header = () => {
   const { getUser, token } = useService();
+
   const [user, setUser] = useState<IUser>();
   const [isFocused, setIsFocused] = useState(false);
+
   useEffect(() => {
     getUser().then((res) => {
       setUser(res);
     });
   }, [token]);
+
+  const location = useLocation();
 
   const typesBtns: ITypesBtns[] = [
     {
@@ -53,33 +58,35 @@ const Header = () => {
           <button className="arrows_btn">
             <MdOutlineKeyboardArrowRight className="w-7 h-7" />
           </button>
-          <label htmlFor="search">
-            <div
-              className={`flex items-center gap-1 bg-[#242424] px-3 py-[14px] rounded-full ${
-                isFocused
-                  ? "border border-white"
-                  : "hover:border hover:border-white/10"
-              }`}
-            >
-              <IoSearchOutline size="20" color="rgba(255, 255, 255, 0.7)" />
-              <input
-                type="text"
-                autoComplete="off"
-                className="w-[300px] bg-transparent text-[0.8125rem] text-white font-semibold"
-                id="search"
-                placeholder="Что хочешь включить?"
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-              />
-            </div>
-          </label>
+          {location.pathname === "search" && (
+            <label htmlFor="search">
+              <div
+                className={`flex items-center gap-1 bg-[#242424] px-3 py-[14px] rounded-full ${
+                  isFocused
+                    ? "border border-white"
+                    : "hover:border hover:border-white/10"
+                }`}
+              >
+                <IoSearchOutline size="20" color="rgba(255, 255, 255, 0.7)" />
+                <input
+                  type="text"
+                  autoComplete="off"
+                  className="w-[300px] bg-transparent text-[0.8125rem] text-white font-semibold"
+                  id="search"
+                  placeholder="Что хочешь включить?"
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                />
+              </div>
+            </label>
+          )}
         </div>
         <div className="flex items-center gap-2">
-          <button className="px-4 hover:scale-105 py-[6px] flex items-center bg-white rounded-full">
+          {/* <button className="px-4 hover:scale-105 py-[6px] flex items-center bg-white rounded-full">
             <span className="text-sm font-bold text-black">
               Узнать больше о Premium
             </span>
-          </button>
+          </button> */}
           <a
             href="https://open.spotify.com/download"
             rel="noreferrer"
@@ -105,16 +112,18 @@ const Header = () => {
           </button>
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        {typesBtns.map((item, i) => (
-          <button
-            key={i}
-            className="px-3 py-1 bg-white/10 hover:bg-white/15 rounded-2xl"
-          >
-            <span className="text-sm">{item.title}</span>
-          </button>
-        ))}
-      </div>
+      {location.pathname === "/" && (
+        <div className="flex items-center gap-2">
+          {typesBtns.map((item, i) => (
+            <button
+              key={i}
+              className="px-3 py-1 bg-white/10 hover:bg-white/15 rounded-2xl"
+            >
+              <span className="text-sm">{item.title}</span>
+            </button>
+          ))}
+        </div>
+      )}
     </header>
   );
 };

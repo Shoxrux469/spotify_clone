@@ -2,8 +2,9 @@ import { LuPlusCircle } from "react-icons/lu";
 import { FaRandom, FaPlayCircle, FaPauseCircle } from "react-icons/fa";
 
 import "../../index.scss";
-import { useState } from "react";
-
+import { useContext, useState } from "react";
+import currentTrack from "../../modules/contexts/currTrack";
+import { ITrack } from "../../types/types";
 interface IPlayerState {
   isRandom: boolean;
   isPlaying: boolean;
@@ -29,8 +30,16 @@ const Player = () => {
     isText: false,
     isDevice: false,
   });
+  const track = useContext(currentTrack);
+  console.log(track);
+
   const [isRepeat, setIsRepeat] = useState<boolean>(false);
   const [isRepeatInf, setIsRepeatInf] = useState<boolean>(false);
+  // const [lastTrack, setLastTrack] = useState<ITrack>(
+  //   JSON.parse(localStorage.getItem("lastTrack"))
+  // );
+  const lastTrackData = localStorage.getItem("lastTrack");
+  const lastTrack = lastTrackData ? JSON.parse(lastTrackData) : null;
 
   // Функция toggleState предназначена для переключения состояния определенного ключа в объекте состояния компонента.
   // Она принимает аргумент key, который должен быть ключом объекта состояния PlayerState.
@@ -82,6 +91,14 @@ const Player = () => {
       stateFn: "isDevice",
     },
   ];
+
+  // const name = track?.track?.name || lastTrack?.name;
+  // const img =
+  //   track?.track?.album?.images[0]?.url ||
+  //   lastTrack?.album?.images[0]?.url ||
+  //   "https://i.scdn.co/image/ab67616d00001e020eb9240c0c5bbba4a0495587";
+  // const artist =
+  //   track?.track?.album?.artists[0]?.name || lastTrack?.album?.artists[0]?.name;
 
   return (
     <div className="w-full player">
@@ -157,7 +174,12 @@ const Player = () => {
             </div>
           </div>
           <div className="w-[520px] mt-2">
-            <audio className="w-full" src="" controls autoPlay></audio>
+            <audio
+              className="w-full"
+              // src={track?.track?.preview_url || lastTrack?.preview_url}
+              controls
+              autoPlay
+            ></audio>
           </div>
         </div>
         <div className="w-[30%] flex items-center">

@@ -1,21 +1,9 @@
 import { useEffect, useState } from "react";
 import useService from "../../hooks/service";
-import Header from "../../components/header/header";
 import PlaylistsTypes from "./playlistsTypes";
 import "./index.scss";
 import PlayListsCard from "../../components/common/playListsCard";
-
-interface IMergedData {
-  name: string;
-  images: {
-    url: string;
-  }[];
-  id: string;
-  description?: string;
-  tracks: {
-    href: string;
-  };
-}
+import { IMergedData } from "../../types/types";
 
 interface IUser {
   display_name: string;
@@ -69,7 +57,7 @@ const Main = () => {
           </p>
         </div>
       </div>
-      <div className="px-3 pb-6">
+      <div className="px-2 pb-6">
         <div className="flex">
           {playLists &&
             playLists.map((item, i) => <PlayListsCard item={item} key={i} />)}

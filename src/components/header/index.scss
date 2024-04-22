@@ -1,5 +1,5 @@
 .header {
-  @apply h-fit sticky z-10 top-0 bg-[#121212] backdrop-blur-3xl flex flex-col p-4 gap-4;
+  @apply h-fit sticky z-10 top-0 bg-transparent backdrop-blur-[5px] flex flex-col py-4 px-5 gap-4;
 }
 .arrows_btn {
   @apply w-8 h-8 bg-black/60 rounded-full flex justify-center items-center;
