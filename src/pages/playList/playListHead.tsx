@@ -1,8 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
-import bgContext from "../../modules/contexts/setBg";
-import { getAverageRGB } from "../../hooks/getImgBg";
+import bgContext from "../../utils/contexts/setBg";
+import { getAverageRGB } from "../../lib/getImgBg";
 import { IPlaylist, ITrack } from "../../types/types";
-
 
 interface IPalyList {
   track: ITrack;
@@ -13,8 +12,7 @@ const PlayListHead: React.FC<{
   tracks: ITrack[] | IPalyList[];
   artists: string;
 }> = ({ playList, tracks, artists }) => {
-  let bgColor = useContext(bgContext);
-
+  let { bgColor, setBgColor } = useContext(bgContext);
   const { images, name, type } = playList;
   console.log(name);
 
@@ -22,13 +20,18 @@ const PlayListHead: React.FC<{
 
   useEffect(() => {
     if (imgEl.current) {
-      bgColor = getAverageRGB(imgEl.current);
-      // console.log(getAverageRGB(imgEl.current));
+      setBgColor(getAverageRGB(imgEl.current));
     }
   }, []);
+  console.log(bgColor);
 
   return (
-    <div className="flex mx-5 items-end" style={{ backgroundColor: bgColor }}>
+    <div
+      className={`flex px-5 py-4 items-end`}
+      style={{
+        background: `linear-gradient(90deg, ${bgColor} 100%, ${bgColor} 70%)`,
+      }}
+    >
       <img
         ref={imgEl}
         className="max-w-[240px] rounded-xl mr-6"

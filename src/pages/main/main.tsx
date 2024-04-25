@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useService from "../../hooks/service";
+import useService from "../../hooks/useService";
 import PlaylistsTypes from "./playlistsTypes";
 import "./index.scss";
 import PlayListsCard from "../../components/common/playListsCard";
@@ -46,10 +46,10 @@ const Main = () => {
 
   return (
     <div>
-      <div className="main_content">
+      <div className="main_content mt-28">
         <PlaylistsTypes />
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold cursor-pointer hover:underline">
+          <h2 className="text-2xl mb-3 font-bold cursor-pointer hover:underline">
             Специально для тебя, {user?.display_name}
           </h2>
           <p className="text-[#b3b3b3] hover:underline cursor-pointer font-semibold text-sm">

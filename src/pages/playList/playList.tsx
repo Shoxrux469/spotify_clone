@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import useService from "../../hooks/service";
+import useService from "../../hooks/useService";
 import PlayListHead from "./playListHead";
 import Loader from "../../components/common/loader";
 import SongsList from "./songsList";

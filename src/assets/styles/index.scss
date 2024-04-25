@@ -34,7 +34,7 @@ body {
 }
 
 .player {
-  @apply w-full h-fit px-5 pt-1 pb-2 bg-black/70
+  @apply w-full h-fit px-5 bg-black/70
   flex justify-between items-center gap-10 text-white;
   audio {
     height: 30px;

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router";
-import useService from "../../hooks/service";
 import { IPlaylist } from "../../types/types";
 
 const MyPlayLists: React.FC<{ item: IPlaylist }> = ({ item }) => {

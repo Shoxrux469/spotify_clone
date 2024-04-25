@@ -1,4 +1,4 @@
-import useService from "../../hooks/service";
+import useService from "../../hooks/useService";
 import { useEffect, useState } from "react";
 import "./index.scss";
 import { IMergedData } from "../../types/types";

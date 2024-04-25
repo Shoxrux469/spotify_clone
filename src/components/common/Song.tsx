@@ -2,27 +2,24 @@
 // import currentTrack from "../../contexts/currentTrack";
 
 import { AiOutlineHeart } from "react-icons/ai";
-import currentTrack from "../../modules/contexts/currTrack";
+import currentTrack from "../../utils/contexts/currTrack";
 import { useContext } from "react";
 import { ITrack } from "../../types/types";
 
 const Song: React.FC<{
   track: ITrack;
   index: number;
-  img: string;
+  img?: string;
 }> = ({ track, index, img }) => {
-  const Track = useContext(currentTrack);
+  const { setCurrTrack } = useContext(currentTrack);
   const duration = (track.duration_ms / 1000 / 60).toFixed(2).split(".");
 
-  // console.log(track);
   const clickSong = () => {
     localStorage.setItem("lastTrack", JSON.stringify(track));
-    let updatedTrack = {
-      isPlaying: true,
+    setCurrTrack({
       track: track,
-    };
-    Track.isPlaying = updatedTrack.isPlaying;
-    Track.track = updatedTrack.track;
+      isPlaying: true,
+    });
   };
 
   return (
@@ -49,7 +46,7 @@ const Song: React.FC<{
         <button>
           <AiOutlineHeart color="#b3b3b3" size="24px" />
         </button>
-        <p>{`${duration[0]} : ${duration[1]}`}</p>
+        <p>{`${duration[0]}:${duration[1]}`}</p>
       </td>
     </tr>
   );

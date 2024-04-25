@@ -5,10 +5,11 @@ import {
 } from "react-icons/md";
 import { FiArrowDownCircle } from "react-icons/fi";
 import { GoBell } from "react-icons/go";
-import useService from "../../hooks/service";
-import { useEffect, useState } from "react";
+import useService from "../../hooks/useService";
+import { useContext, useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import searchContext from "../../utils/contexts/search";
 
 interface IUser {
   images: [
@@ -28,6 +29,8 @@ const Header = () => {
   const [user, setUser] = useState<IUser>();
   const [isFocused, setIsFocused] = useState(false);
 
+  const { searchText, setSearchText } = useContext(searchContext);
+
   useEffect(() => {
     getUser().then((res) => {
       setUser(res);
@@ -35,6 +38,12 @@ const Header = () => {
   }, [token]);
 
   const location = useLocation();
+
+  useEffect(() => {
+    setSearchText("");
+  }, [location]);
+
+  const navigate = useNavigate();
 
   const typesBtns: ITypesBtns[] = [
     {
@@ -52,13 +61,13 @@ const Header = () => {
     <header className="header">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <button className="arrows_btn">
+          <button className="arrows_btn" onClick={() => navigate(-1)}>
             <MdOutlineKeyboardArrowLeft className="w-7 h-7" />
           </button>
-          <button className="arrows_btn">
+          <button className="arrows_btn" onClick={() => navigate(1)}>
             <MdOutlineKeyboardArrowRight className="w-7 h-7" />
           </button>
-          {location.pathname === "search" && (
+          {location.pathname === "/search" && (
             <label htmlFor="search">
               <div
                 className={`flex items-center gap-1 bg-[#242424] px-3 py-[14px] rounded-full ${
@@ -76,6 +85,9 @@ const Header = () => {
                   placeholder="Что хочешь включить?"
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
+                  onInput={(e) =>
+                    setSearchText((e.target as HTMLInputElement).value)
+                  }
                 />
               </div>
             </label>

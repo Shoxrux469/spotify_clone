@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useHttps from "./https";
+import useHttps from "./useHttps";
 
 interface ISettings {
   headers: {
@@ -29,6 +29,23 @@ const useService = () => {
       return res.data;
     }
   };
+
+  const getCategory = async (id: string) => {
+    const res = await request(
+      `${_apiBase}browse/categories/${id}/playlists?country=uz&limit=10&offset=0`,
+      settings
+    );
+    return res.data;
+  };
+
+  const getAllCategories = async () => {
+    const res = await request(
+      `${_apiBase}browse/categories?country=UZ&locale=uz&offset=20&limit=5`,
+      settings
+    );
+    return res.data;
+  };
+
   const getAlbums = async (id: string) => {
     if (token) {
       const res = await request(`${_apiBase}albums/${id}`, settings);
@@ -78,8 +95,10 @@ const useService = () => {
   };
 
   return {
+    getAllCategories,
     getPlayLists,
     getPlayList,
+    getCategory,
     getAlbums,
     getSearch,
     getTracks,

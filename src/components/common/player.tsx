@@ -1,10 +1,11 @@
 import { LuPlusCircle } from "react-icons/lu";
 import { FaRandom, FaPlayCircle, FaPauseCircle } from "react-icons/fa";
 
-import "../../index.scss";
-import { useContext, useState } from "react";
-import currentTrack from "../../modules/contexts/currTrack";
-import { IPlayerState } from "../../types/types";
+import "../../assets/styles/index.scss";
+import { ReactNode, useContext, useEffect, useState } from "react";
+import currentTrack from "../../utils/contexts/currTrack";
+import { IPlayerState, ITrack } from "../../types/types";
+import { TbVolume } from "react-icons/tb";
 
 interface IControlsArr {
   path: string;
@@ -16,22 +17,22 @@ interface IControlsArr {
 const Player = () => {
   const [playerState, setPlayerState] = useState<IPlayerState>({
     isRandom: false,
-    isPlaying: false,
     isOutlineQueueList: false,
     isMicrophone: false,
     isText: false,
     isDevice: false,
   });
-  const track = useContext(currentTrack);
-  console.log(track);
+  const { currTrack, setCurrTrack } = useContext(currentTrack);
+
+  const { isPlaying, track } = currTrack;
+
+  const getLastTrack = localStorage.getItem("lastTrack");
+  const lastTrackData = getLastTrack && JSON.parse(getLastTrack);
+  const [play, setPlay] = useState(isPlaying);
+  const [lastTrack, setLastTrack] = useState<ITrack>(lastTrackData);
 
   const [isRepeat, setIsRepeat] = useState<boolean>(false);
   const [isRepeatInf, setIsRepeatInf] = useState<boolean>(false);
-  // const [lastTrack, setLastTrack] = useState<ITrack>(
-  //   JSON.parse(localStorage.getItem("lastTrack"))
-  // );
-  const lastTrackData = localStorage.getItem("lastTrack");
-  const lastTrack = lastTrackData ? JSON.parse(lastTrackData) : null;
 
   // Функция toggleState предназначена для переключения состояния определенного ключа в объекте состояния компонента.
   // Она принимает аргумент key, который должен быть ключом объекта состояния PlayerState.
@@ -45,6 +46,20 @@ const Player = () => {
       [key]: !prevState[key],
     }));
   };
+
+  useEffect(() => {
+    const audio = document.querySelector("audio");
+
+    if (audio) {
+      if (play) {
+        audio.play();
+        setCurrTrack({ isPlaying: true, track });
+      } else {
+        audio.pause();
+        setCurrTrack({ isPlaying: false, track });
+      }
+    }
+  }, [play]);
 
   const toggleRepeat = () => {
     setIsRepeat(!isRepeat);
@@ -84,31 +99,32 @@ const Player = () => {
     },
   ];
 
-  // const name = track?.track?.name || lastTrack?.name;
-  // const img =
-  //   track?.track?.album?.images[0]?.url ||
-  //   lastTrack?.album?.images[0]?.url ||
-  //   "https://i.scdn.co/image/ab67616d00001e020eb9240c0c5bbba4a0495587";
-  // const artist =
-  //   track?.track?.album?.artists[0]?.name || lastTrack?.album?.artists[0]?.name;
+  const name = currTrack?.track?.name || lastTrack?.name;
+  const img =
+    currTrack?.track?.album?.images[0]?.url ||
+    lastTrack?.album?.images[0]?.url ||
+    "https://i.scdn.co/image/ab67616d00001e020eb9240c0c5bbba4a0495587";
+  const artist =
+    currTrack?.track?.album?.artists[0]?.name ||
+    lastTrack?.album?.artists[0]?.name;
 
   return (
     <div className="w-full player">
-      <div className="w-full flex">
-        <div className="w-[30%] flex">
-          <img src="" alt="" />
+      <div className="w-full mt-6 flex">
+        <div className="w-[30%] flex items-center">
+          <img className="w-14 h-14 mr-4 rounded-lg" src={img} alt="" />
           <div>
-            <p className="song_name"></p>
-            <span className="singer_name"></span>
+            <p className="text-base font-medium">{name}</p>
+            <span className="text-[#B3B3B3] text-sm font-medium">{artist}</span>
           </div>
-          <button>
+          <button className="ml-4">
             <LuPlusCircle />
           </button>
         </div>
         <div className="w-[40%] flex flex-col items-center">
           <div className="player_controls flex items-center gap-2">
             <div className="player_controls_left flex gap-2">
-              <button className="controls_btn">
+              <button aria-label="Shuffle" className="controls_btn">
                 <FaRandom
                   onClick={() => toggleState("isRandom")}
                   className={
@@ -118,29 +134,29 @@ const Player = () => {
                   }
                 />
               </button>
-              <button className="controls_btn">
+              <button aria-label="Shuffle" className="controls_btn">
                 <svg className="w-4 h-4 fill-white/70 hover:fill-white">
                   <path d="M3.3 1a.7.7 0 0 1 .7.7v5.15l9.95-5.744a.7.7 0 0 1 1.05.606v12.575a.7.7 0 0 1-1.05.607L4 9.149V14.3a.7.7 0 0 1-.7.7H1.7a.7.7 0 0 1-.7-.7V1.7a.7.7 0 0 1 .7-.7h1.6z"></path>
                 </svg>
               </button>
             </div>
             <button
-              onClick={() => toggleState("isPlaying")}
+              onClick={() => setPlay(!play)}
               className="player_controls_pause hover:scale-110"
             >
-              {playerState.isPlaying ? (
+              {play ? (
                 <FaPauseCircle size="32px" />
               ) : (
                 <FaPlayCircle size="32px" />
               )}
             </button>
             <div className="player_controls_right flex gap-2">
-              <button className="controls_btn">
+              <button aria-label="Shuffle" className="controls_btn">
                 <svg className="w-4 h-4 fill-white/70 hover:fill-white">
                   <path d="M12.7 1a.7.7 0 0 0-.7.7v5.15L2.05 1.107A.7.7 0 0 0 1 1.712v12.575a.7.7 0 0 0 1.05.607L12 9.149V14.3a.7.7 0 0 0 .7.7h1.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-1.6z"></path>
                 </svg>
               </button>
-              <button className="controls_btn">
+              <button aria-label="Shuffle" className="controls_btn">
                 {isRepeatInf ? (
                   <svg
                     onClick={offsetInfRepeat}
@@ -168,13 +184,13 @@ const Player = () => {
           <div className="w-[520px] mt-2">
             <audio
               className="w-full"
-              // src={track?.track?.preview_url || lastTrack?.preview_url}
+              src={track?.preview_url || lastTrack?.preview_url}
               controls
               autoPlay
             ></audio>
           </div>
         </div>
-        <div className="w-[30%] flex items-center">
+        <div className="w-[30%] flex items-center justify-end pr-6">
           {controlsArr.map((item, i) => (
             <button
               key={i}
@@ -187,6 +203,12 @@ const Player = () => {
               </svg>
             </button>
           ))}
+          <button aria-label="Shuffle" className="controls_btn">
+            <TbVolume size="21px" color="#ffffff70" />
+          </button>
+          <div className="w-[120px] h-[5px] bg-[#ffffff50] rounded-md overflow-hidden">
+            <div className="w-5/6 h-full bg-white rounded-md"></div>
+          </div>
         </div>
       </div>
     </div>

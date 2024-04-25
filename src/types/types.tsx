@@ -1,4 +1,5 @@
 export interface ITrack {
+  id: string;
   artists: {
     name: string;
   }[];
@@ -43,7 +44,6 @@ export interface IPlaylist {
 
 export interface IPlayerState {
   isRandom: boolean;
-  isPlaying: boolean;
   isOutlineQueueList: boolean;
   isMicrophone: boolean;
   isText: boolean;

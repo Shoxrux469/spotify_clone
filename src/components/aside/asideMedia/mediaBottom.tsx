@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "../index.scss";
-import useService from "../../../hooks/service";
+import useService from "../../../hooks/useService";
 import MyPlayLists from "../../common/myPlayLists";
 import { IPlaylist } from "../../../types/types";
 
@@ -31,7 +31,7 @@ const MediaBottom = () => {
   };
 
   return (
-    <div className="h-full">
+    <div>
       <div className="pb-2 px-2">
         <div className="flex justify-between items-center pt-[2px] pr-[2px] pl-2">
           <div className="relative">
