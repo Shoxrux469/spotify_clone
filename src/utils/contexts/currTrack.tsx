@@ -9,7 +9,7 @@ interface ICurrTrack {
 interface ISearchContext {
   currTrack: ICurrTrack;
   setCurrTrack: Dispatch<SetStateAction<ICurrTrack>>;
-} 
+}
 
 const lastTrackString = localStorage.getItem("lastTrack");
 const defaultTrack: ISearchContext = {
